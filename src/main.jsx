@@ -6,7 +6,7 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-        <ClickSpark sparkColor="#ffd166" sparkCount={14}>
+        <ClickSpark sparkColor="#2E8B57" sparkCount={14}>
             <App />
         </ClickSpark>
     </React.StrictMode>
