@@ -562,3 +562,45 @@
         border-radius: 50px;
     }
 }
+.pc-avatar-content {
+    position: relative;
+    mix-blend-mode: normal !important;   /* stop turning the photo grayscale/dark */
+    overflow: visible;
+    transform: translateZ(2);
+    backface-visibility: hidden;
+}
+
+/* Bright center, darker edges (vignette) */
+.pc-avatar-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(
+            circle at 50% 40%,
+            rgba(0, 0, 0, 0.0) 0%,    /* center fully clear */
+            rgba(0, 0, 0, 0.15) 70%,  /* very light in mid */
+            rgba(0, 0, 0, 0.55) 75%,  /* darker near edges */
+            rgba(0, 0, 0, 0.85) 100%  /* darkest at corners */
+    );
+}
+
+/* optionally boost the photo a bit so colors pop */
+.pc-avatar-content .avatar {
+    width: 100%;
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    transform-origin: 50% 100%;
+    transform: translateX(calc(-50% + (var(--pointer-from-left) - 0.5) * 6px))
+    translateZ(0)
+    scaleY(calc(1 + (var(--pointer-from-top) - 0.5) * 0.02))
+    scaleX(calc(1 + (var(--pointer-from-left) - 0.5) * 0.01));
+    backface-visibility: hidden;
+    will-change: transform;
+    transition: transform 120ms ease-out;
+    z-index: 0;
+
+    filter: brightness(1.15) contrast(1.05) saturate(1.1);  /* tweak as you like */
+}
