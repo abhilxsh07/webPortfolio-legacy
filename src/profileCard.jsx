@@ -30,9 +30,9 @@ const ProfileCardComponent = ({
                                   mobileTiltSensitivity = 5,
                                   miniAvatarUrl,
                                   name = 'Abhilash Kar',
-                                  title = 'Software Engineer',
+                                  title = '',
                                   handle = 'abhilxsh07',
-                                  status = 'Online',
+                                  status = 'Software Engineer',
                                   contactText = 'Contact',
                                   showUserInfo = true,
                                   onContactClick
@@ -320,10 +320,12 @@ const ProfileCardComponent = ({
                                 alt={`${name || 'User'} avatar`}
                                 loading="lazy"
                                 onError={e => {
-                                    const t = e.target;
-                                    t.style.display = 'none';
+                                    e.currentTarget.style.opacity = '0.5';
+                                    // optionally: e.currentTarget.src = fallbackImg;
                                 }}
                             />
+
+
                             {showUserInfo && (
                                 <div className="pc-user-info">
                                     <div className="pc-user-details">

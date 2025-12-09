@@ -216,3 +216,9 @@
     position: relative;
     user-select: none;
 }
+.github-stats-img {
+    width: 100%;
+    height: auto;
+    margin-top: 0.75rem;
+    border-radius: 12px;
+}

@@ -1,6 +1,7 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
 import { gsap } from 'gsap';
 import './MagicBento.css';
+import CountUp from './CountUp';
 
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
@@ -10,15 +11,15 @@ const MOBILE_BREAKPOINT = 768;
 const cardData = [
     {
         color: '#060010',
-        title: 'Analytics',
-        description: 'Track user behavior',
-        label: 'Insights'
+        title: 'Coffee/Energy drinks consumed',
+        description: 'in Litres',
+        label: 'By the numbers'
     },
     {
         color: '#060010',
-        title: 'Dashboard',
-        description: 'Centralized data view',
-        label: 'Overview'
+        title: '',
+        description: '',
+        label: 'Stats'
     },
     {
         color: '#060010',
@@ -143,7 +144,11 @@ const ParticleCard = ({
                 cardRef.current.appendChild(clone);
                 particlesRef.current.push(clone);
 
-                gsap.fromTo(clone, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.7)' });
+                gsap.fromTo(
+                    clone,
+                    { scale: 0, opacity: 0 },
+                    { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.7)' }
+                );
 
                 gsap.to(clone, {
                     x: (Math.random() - 0.5) * 100,
@@ -501,7 +506,9 @@ const MagicBento = ({
 
             <BentoCardGrid gridRef={gridRef}>
                 {cardData.map((card, index) => {
-                    const baseClassName = `magic-bento-card ${textAutoHide ? 'magic-bento-card--text-autohide' : ''} ${enableBorderGlow ? 'magic-bento-card--border-glow' : ''}`;
+                    const baseClassName = `magic-bento-card ${
+                        textAutoHide ? 'magic-bento-card--text-autohide' : ''
+                    } ${enableBorderGlow ? 'magic-bento-card--border-glow' : ''}`;
                     const cardProps = {
                         className: baseClassName,
                         style: {
@@ -528,6 +535,24 @@ const MagicBento = ({
                                 <div className="magic-bento-card__content">
                                     <h2 className="magic-bento-card__title">{card.title}</h2>
                                     <p className="magic-bento-card__description">{card.description}</p>
+                                    {/* GitHub stats image for the Overview card */}
+                                    {card.label === 'Stats' && (
+                                        <img
+                                            src="https://git-hub-stats-card-generator.vercel.app/api/svg?username=abhilxsh07&theme=tokyonight"
+                                            alt="GitHub statistics"
+                                            className="github-stats-img"
+                                        />
+                                    )}
+                                    {index === 0 && (
+                                        <CountUp
+                                            from={0}
+                                            to={100}
+                                            separator=","
+                                            direction="up"
+                                            duration={1}
+                                            className="count-up-text"
+                                        />
+                                    )}
                                 </div>
                             </ParticleCard>
                         );
@@ -651,6 +676,24 @@ const MagicBento = ({
                             <div className="magic-bento-card__content">
                                 <h2 className="magic-bento-card__title">{card.title}</h2>
                                 <p className="magic-bento-card__description">{card.description}</p>
+                                {/* GitHub stats image for the Overview card */}
+                                {card.label === 'Overview' && (
+                                    <img
+                                        src="https://git-hub-stats-card-generator.vercel.app/api/svg?username=abhilxsh07&theme=tokyonight"
+                                        alt="GitHub statistics"
+                                        className="github-stats-img"
+                                    />
+                                )}
+                                {index === 0 && (
+                                    <CountUp
+                                        from={0}
+                                        to={100}
+                                        separator=","
+                                        direction="up"
+                                        duration={1}
+                                        className="count-up-text"
+                                    />
+                                )}
                             </div>
                         </div>
                     );
