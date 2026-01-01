@@ -333,3 +333,80 @@ p.introLine {
     margin-top: 400px;
 }
 
+.projects-blur-box {
+    width: 90%;
+    margin: 6rem auto 0;
+    border-radius: 2rem;
+    position: relative;
+    overflow: hidden;
+    background: var(--projects-box-bg, rgba(10, 10, 10, 0.68));
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
+}
+
+.projects-blur-content {
+    position: relative;
+    z-index: 1;
+    padding: 3rem;
+}
+
+.projects-grid-wrap {
+    height: 600px;
+    position: relative;
+    width: 100%;
+}
+
+.projects-iridescence-section {
+    margin: 6rem auto 0;
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.projects-grid-wrap {
+    height: 600px;
+    position: relative;
+    width: 100%;
+}
+.projects-iridescence-box {
+    position: relative;
+    overflow: hidden;
+}
+
+.projects-content {
+    position: relative;
+    z-index: 5;
+}
+.projects-iridescence{
+    --iridescence-start-gap: 140px;  /* change this */
+    margin-top: var(--iridescence-start-gap);
+}
+.projects-iridescence .texttype-section{
+    margin-top: 300px;              /* brings TextType up */
+    margin-bottom: 100px;        /* spacing between TextType and grid */
+}
+
+.projects-iridescence .iridescence-content{
+    --inner-top-pad: 24px;      /* change this to move TextType closer/farther from top */
+    --inner-bottom-pad: 60px;
+    padding: var(--inner-top-pad) 0 var(--inner-bottom-pad);
+    box-sizing: border-box;
+}
+.projects-iridescence-box {
+    position: relative;
+    border-radius: 2rem;
+    overflow: hidden;
+}
+
+.projects-iridescence-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.projects-iridescence-content {
+    position: relative;
+    z-index: 3;
+}
+

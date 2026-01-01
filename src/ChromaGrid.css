@@ -193,3 +193,64 @@
     white-space: normal;
 }
 
+
+.chroma-grid {
+    background: transparent;
+}
+.chroma-card {
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(10px);
+}
+.chroma-grid {
+    background: transparent;
+}
+
+
+
+.chroma-grid {
+    background: transparent;
+}
+
+
+
+.chroma-grid {
+    background: transparent;
+}
+
+.chroma-overlay,
+.chroma-fade {
+    display: none;
+}
+.chroma-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.chroma-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 240ms ease;
+
+    background: radial-gradient(
+            circle var(--r) at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(0, 0, 0, 0.05) 0%,
+            rgba(0, 0, 0, 0.75) 70%
+    );
+}
+
+.chroma-img-wrapper img {
+    transition: filter 240ms ease;
+    filter: saturate(0.35) brightness(0.8) contrast(1.05);
+}
+
+.chroma-card:hover::after {
+    opacity: 0;
+}
+
+.chroma-card:hover .chroma-img-wrapper img {
+    filter: none;
+}
