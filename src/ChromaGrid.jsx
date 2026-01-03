@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef, useCallback, useMemo, useState } from 'react';
 import { gsap } from 'gsap';
 import './ChromaGrid.css';
 
@@ -8,7 +8,6 @@ export const ChromaGrid = ({
                                radius = 300,
                                columns = 3,
                                rows = 2,
-                               gap = 32,
                                damping = 0.45,
                                fadeOut = 0.6,
                                ease = 'power3.out'
@@ -19,7 +18,64 @@ export const ChromaGrid = ({
     const setY = useRef(null);
     const pos = useRef({ x: 0, y: 0 });
 
+    const [colsAuto, setColsAuto] = useState(columns);
 
+    const demo = [
+        {
+            image: 'https://i.pravatar.cc/300?img=8',
+            title: 'Alex Rivera',
+            subtitle: 'Full Stack Developer',
+            handle: '@alexrivera',
+            borderColor: '#4F46E5',
+            gradient: 'linear-gradient(145deg, #4F46E5, #000)',
+            url: 'https://github.com/'
+        },
+        {
+            image: 'https://i.pravatar.cc/300?img=11',
+            title: 'Jordan Chen',
+            subtitle: 'DevOps Engineer',
+            handle: '@jordanchen',
+            borderColor: '#10B981',
+            gradient: 'linear-gradient(210deg, #10B981, #000)',
+            url: 'https://linkedin.com/in/'
+        },
+        {
+            image: 'https://i.pravatar.cc/300?img=3',
+            title: 'Morgan Blake',
+            subtitle: 'UI/UX Designer',
+            handle: '@morganblake',
+            borderColor: '#F59E0B',
+            gradient: 'linear-gradient(165deg, #F59E0B, #000)',
+            url: 'https://dribbble.com/'
+        },
+        {
+            image: 'https://i.pravatar.cc/300?img=16',
+            title: 'Casey Park',
+            subtitle: 'Data Scientist',
+            handle: '@caseypark',
+            borderColor: '#EF4444',
+            gradient: 'linear-gradient(195deg, #EF4444, #000)',
+            url: 'https://kaggle.com/'
+        },
+        {
+            image: 'https://i.pravatar.cc/300?img=25',
+            title: 'Sam Kim',
+            subtitle: 'Mobile Developer',
+            handle: '@thesamkim',
+            borderColor: '#8B5CF6',
+            gradient: 'linear-gradient(225deg, #8B5CF6, #000)',
+            url: 'https://github.com/'
+        },
+        {
+            image: 'https://i.pravatar.cc/300?img=60',
+            title: 'Tyler Rodriguez',
+            subtitle: 'Cloud Architect',
+            handle: '@tylerrod',
+            borderColor: '#06B6D4',
+            gradient: 'linear-gradient(135deg, #06B6D4, #000)',
+            url: 'https://aws.amazon.com/'
+        }
+    ];
     const data = items?.length ? items : demo;
 
     useEffect(() => {
@@ -37,38 +93,30 @@ export const ChromaGrid = ({
         const el = rootRef.current;
         if (!el) return;
 
-        let raf = 0;
+        const ro = new ResizeObserver(entries => {
+            const w = entries[0].contentRect.width;
 
-        const syncHeights = () => {
-            const cards = Array.from(el.querySelectorAll('.chroma-card'));
-            if (!cards.length) return;
+            let nextCols = columns;
+            if (w < 640) nextCols = 1;
+            else if (w < 1024) nextCols = 2;
+            else nextCols = columns;
 
-            cards.forEach(c => {
-                c.style.height = 'auto';
-            });
+            setColsAuto(nextCols);
 
-            const maxH = Math.max(...cards.map(c => c.offsetHeight));
-            el.style.setProperty('--card-h', `${maxH}px`);
-        };
+            if (setX.current && setY.current) {
+                const { width, height } = el.getBoundingClientRect();
+                pos.current = { x: width / 2, y: height / 2 };
+                setX.current(pos.current.x);
+                setY.current(pos.current.y);
+            }
+        });
 
-        const run = () => {
-            cancelAnimationFrame(raf);
-            raf = requestAnimationFrame(syncHeights);
-        };
+        ro.observe(el);
+        return () => ro.disconnect();
+    }, [columns]);
 
-        const imgs = Array.from(el.querySelectorAll('img'));
-        const waitForImgs = Promise.all(
-            imgs.map(img => (img.complete ? Promise.resolve() : new Promise(res => img.addEventListener('load', res, { once: true }))))
-        );
-
-        waitForImgs.then(run);
-        window.addEventListener('resize', run);
-
-        return () => {
-            window.removeEventListener('resize', run);
-            cancelAnimationFrame(raf);
-        };
-    }, [data.length, columns, rows, gap]);
+    const colsUsed = colsAuto;
+    const rowsUsed = Math.ceil(data.length / colsUsed);
 
     const moveTo = (x, y) => {
         gsap.to(pos.current, {
@@ -119,9 +167,8 @@ export const ChromaGrid = ({
             className={`chroma-grid ${className}`}
             style={{
                 '--r': `${radius}px`,
-                '--cols': columns,
-                '--rows': rows,
-                '--gap': typeof gap === 'number' ? `${gap}px` : gap
+                '--cols': colsUsed,
+                '--rows': rowsUsed
             }}
             onPointerMove={handleMove}
             onPointerLeave={handleLeave}

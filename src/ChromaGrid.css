@@ -1,229 +1,57 @@
 .chroma-grid {
-    position: relative;
-    width: 100%;
-    height: 150%;
-    display: grid;
-    grid-template-columns: repeat(var(--cols, 3), 320px);
-    grid-auto-rows: auto;
-    justify-content: center;
-    gap: 0.75rem;
-    max-width: 1200px;
+    --x: 0px;
+    --y: 0px;
+
+    width: min(1200px, 100%);
     margin: 0 auto;
-    padding: 1rem;
+    padding: 0 24px;
     box-sizing: border-box;
 
-    --x: 50%;
-    --y: 50%;
-    --r: 220px;
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    gap: 24px;
+
+    position: relative;
+    isolation: isolate;
 }
 
-@media (max-width: 1124px) {
+@media (max-width: 1024px) {
     .chroma-grid {
-        grid-template-columns: repeat(auto-fit, minmax(320px, 320px));
-        gap: 0.5rem;
-        padding: 0.5rem;
+        padding: 0 20px;
+        gap: 20px;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
     .chroma-grid {
-        grid-template-columns: 320px;
-        gap: 0.75rem;
-        padding: 1rem;
+        padding: 0 16px;
+        gap: 16px;
     }
 }
 
 .chroma-card {
+    min-width: 0;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 320px;
-    height: auto;
-    border-radius: 20px;
     overflow: hidden;
-    border: 1px solid #333;
-    transition: border-color 0.3s ease;
-    background: var(--card-gradient);
-
-    --mouse-x: 50%;
-    --mouse-y: 50%;
-    --spotlight-color: rgba(255, 255, 255, 0.3);
-}
-
-.chroma-card:hover {
-    border-color: var(--card-border);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.55);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+    transform: translateZ(0);
 }
 
 .chroma-card::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 70%);
+    border-radius: inherit;
+    padding: 1px;
+    background: var(--card-gradient, linear-gradient(145deg, rgba(255,255,255,0.18), rgba(0,0,0,0)));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: 2;
-}
-
-.chroma-card:hover::before {
-    opacity: 1;
-}
-
-.chroma-img-wrapper {
-    position: relative;
-    z-index: 1;
-    flex: 1;
-    padding: 10px;
-    box-sizing: border-box;
-    background: transparent;
-    transition: background 0.3s ease;
-}
-
-.chroma-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-    display: block;
-}
-
-.chroma-info {
-    position: relative;
-    z-index: 1;
-    padding: 0.75rem 1rem;
-    color: #fff;
-    font-family: system-ui, sans-serif;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    row-gap: 0.25rem;
-    column-gap: 0.75rem;
-}
-
-.chroma-info .role,
-.chroma-info .handle {
-    color: #aaa;
-}
-
-.chroma-overlay {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 3;
-    backdrop-filter: grayscale(1) brightness(0.78);
-    -webkit-backdrop-filter: grayscale(1) brightness(0.78);
-    background: rgba(0, 0, 0, 0.001);
-
-    mask-image: radial-gradient(
-            circle var(--r) at var(--x) var(--y),
-            transparent 0%,
-            transparent 15%,
-            rgba(0, 0, 0, 0.1) 30%,
-            rgba(0, 0, 0, 0.22) 45%,
-            rgba(0, 0, 0, 0.35) 60%,
-            rgba(0, 0, 0, 0.5) 75%,
-            rgba(0, 0, 0, 0.68) 88%,
-            white 100%
-    );
-    -webkit-mask-image: radial-gradient(
-            circle var(--r) at var(--x) var(--y),
-            transparent 0%,
-            transparent 15%,
-            rgba(0, 0, 0, 0.1) 30%,
-            rgba(0, 0, 0, 0.22) 45%,
-            rgba(0, 0, 0, 0.35) 60%,
-            rgba(0, 0, 0, 0.5) 75%,
-            rgba(0, 0, 0, 0.68) 88%,
-            white 100%
-    );
-}
-
-.chroma-fade {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 4;
-    backdrop-filter: grayscale(1) brightness(0.78);
-    -webkit-backdrop-filter: grayscale(1) brightness(0.78);
-    background: rgba(0, 0, 0, 0.001);
-
-    mask-image: radial-gradient(
-            circle var(--r) at var(--x) var(--y),
-            white 0%,
-            white 15%,
-            rgba(255, 255, 255, 0.9) 30%,
-            rgba(255, 255, 255, 0.78) 45%,
-            rgba(255, 255, 255, 0.65) 60%,
-            rgba(255, 255, 255, 0.5) 75%,
-            rgba(255, 255, 255, 0.32) 88%,
-            transparent 100%
-    );
-    -webkit-mask-image: radial-gradient(
-            circle var(--r) at var(--x) var(--y),
-            white 0%,
-            white 15%,
-            rgba(255, 255, 255, 0.9) 30%,
-            rgba(255, 255, 255, 0.78) 45%,
-            rgba(255, 255, 255, 0.65) 60%,
-            rgba(255, 255, 255, 0.5) 75%,
-            rgba(255, 255, 255, 0.32) 88%,
-            transparent 100%
-    );
-
-    opacity: 1;
-    transition: opacity 0.25s ease;
-}
-
-.chroma-grid {
-    gap: var(--gap, 32px);
-    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
-    grid-template-rows: repeat(var(--rows), var(--card-h, auto));
-    grid-auto-rows: var(--card-h, auto);
-    align-items: start;
-}
-
-.chroma-card {
-    height: var(--card-h, auto);
-}
-
-.chroma-info {
-    overflow: visible;
-}
-
-.chroma-info .name {
-    white-space: normal;
-}
-
-
-.chroma-grid {
-    background: transparent;
-}
-.chroma-card {
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(10px);
-}
-.chroma-grid {
-    background: transparent;
-}
-
-
-
-.chroma-grid {
-    background: transparent;
-}
-
-
-
-.chroma-grid {
-    background: transparent;
-}
-
-.chroma-overlay,
-.chroma-fade {
-    display: none;
-}
-.chroma-card {
-    position: relative;
-    overflow: hidden;
+    opacity: 0.9;
 }
 
 .chroma-card::after {
@@ -231,26 +59,92 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
+    background: rgba(0, 0, 0, 0.45);
     pointer-events: none;
     opacity: 1;
     transition: opacity 240ms ease;
-
-    background: radial-gradient(
-            circle var(--r) at var(--mouse-x, 50%) var(--mouse-y, 50%),
-            rgba(0, 0, 0, 0.05) 0%,
-            rgba(0, 0, 0, 0.75) 70%
-    );
-}
-
-.chroma-img-wrapper img {
-    transition: filter 240ms ease;
-    filter: saturate(0.35) brightness(0.8) contrast(1.05);
 }
 
 .chroma-card:hover::after {
     opacity: 0;
 }
 
+.chroma-img-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    position: relative;
+}
+
+.chroma-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.9) brightness(0.55);
+    transition: filter 240ms ease;
+}
+
 .chroma-card:hover .chroma-img-wrapper img {
-    filter: none;
+    filter: saturate(1) brightness(1);
+}
+
+.chroma-info {
+    padding: 16px 16px 18px;
+    display: grid;
+    gap: 6px;
+    position: relative;
+    z-index: 2;
+}
+
+.chroma-info .name {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 1.25;
+}
+
+.chroma-info .handle {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.chroma-info .role {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.35;
+}
+
+.chroma-info .location {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chroma-overlay,
+.chroma-fade {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: 22px;
+}
+
+.chroma-overlay {
+    background: radial-gradient(
+            circle var(--r) at var(--x) var(--y),
+            rgba(255, 255, 255, 0.08),
+            transparent 65%
+    );
+    mix-blend-mode: screen;
+}
+
+.chroma-fade {
+    background: radial-gradient(
+            circle var(--r) at var(--x) var(--y),
+            rgba(255, 255, 255, 0.06),
+            transparent 70%
+    );
+    opacity: 1;
 }
