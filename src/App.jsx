@@ -21,7 +21,7 @@ import TargetCursor from "./TargetCursor";
 
 const items = [
     {
-        image: "public/myUltron.webp",
+        image: "/myUltron.webp",
         title: "Hackathon Web Application",
         subtitle: "Typescript, React, Tailwind, Node, PHP, MySQL, PDO, OGL, Vite ",
         handle: "",
@@ -30,7 +30,7 @@ const items = [
         url: "https://github.com/abhilxsh07/futurixUltron9.0"
     },
     {
-        image: "public/CollabUltron.webp",
+        image: "/CollabUltron.webp",
         title: "Hackathon Web App (collaborated)",
         subtitle: "Next.JS, React, TypeScript, Tailwind, PostCSS, JS, Radix, Vite",
         handle: "",
@@ -39,7 +39,7 @@ const items = [
         url: "https://github.com/Sharveswar007/ultron-futurix"
     },
     {
-        image: "public/Portfolio.webp",
+        image: "/Portfolio.webp",
         title: "Portfolio Website",
         subtitle: "JSX, CSS, React, WebGL, Vite, JS",
         handle: "",
@@ -49,7 +49,7 @@ const items = [
     },
 
     {
-        image: "public/PyMySQL.webp",
+        image: "/PyMySQL.webp",
         title: "Student DB Manager",
         subtitle: "Python, MySQL",
         handle: "",
@@ -67,7 +67,7 @@ const items = [
         url: "https://github.com/abhilxsh07/collegeProjects/blob/main/reflexArcDemonstration.py"
     },
     {
-        image: "public/C.webp",
+        image: "/C.webp",
         title: "C/C++ (Learning)",
         subtitle: "Compile-Time programming, structs, classes, Polymorphism/Inheritance, RAII, Algorithms, RegEx ",
         handle: "",
