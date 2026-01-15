@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Aurora from "./Aurora.jsx";
 import GlassNav from "./GlassNav.jsx";
 import RotatingText from "./rotatingText.jsx";
@@ -94,23 +94,16 @@ const demoItems = [
 function App() {
     const handleAnimationComplete = () => {};
 
-    const colorBendsBoxStyle = {
-        width: "80%",
-        height: "750px"
-    };
-
     const projectsBoxRef = useRef(null);
     const [projectsCursorOn, setProjectsCursorOn] = useState(false);
     const [topBlurOn, setTopBlurOn] = useState(false);
     const [bottomBlurOn, setBottomBlurOn] = useState(false);
 
-    const projectsSectionMarginTop = "9rem";
-    const projectsBoxWidth = "80%";
-    const projectsBoxHeight = "1000px";
-    const projectsRadius = "2rem";
+    const projectsSectionMarginTop = "clamp(4rem, 10vw, 9rem)";
     const edgeBlurHeight = "6rem";
     const edgeBlurAmount = "18px";
     const edgeThreshold = 70;
+    const iridescenceColor = useMemo(() => [0.12, 0.05, 0.18], []);
 
     useEffect(() => {
         const box = projectsBoxRef.current;
@@ -183,7 +176,7 @@ function App() {
         <main className="page-content">
             <GlassNav />
 
-            <div>
+            <div className="aurora-bleed">
                 <Aurora
                     colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
                     blend={0.5}
@@ -266,7 +259,7 @@ function App() {
             </GradientText>
 
             <div className="colorbends-section">
-                <div className="colorbends-box" style={colorBendsBoxStyle}>
+                <div className="colorbends-box">
                     <div className="colorbends-bg">
                         <ColorBends
                             colors={["#ff5c7a", "#8a5cff", "#00ffd1"]}
@@ -283,7 +276,7 @@ function App() {
                     </div>
 
                     <div className="flowing-menu-container">
-                        <div style={{ height: "600px", position: "relative", width: "80%" }}>
+                        <div className="flowing-menu-frame">
                             <FlowingMenu items={demoItems} />
                         </div>
                     </div>
@@ -294,24 +287,16 @@ function App() {
                 <MagicBento />
             </div>
 
-            <div style={{ display: "flex", justifyContent: "center", marginTop: projectsSectionMarginTop }}>
+            <div className="projects-section" style={{ marginTop: projectsSectionMarginTop }}>
                 <div
                     ref={projectsBoxRef}
-                    className="projects-iridescence-box"
-                    style={{
-                        width: projectsBoxWidth,
-                        height: projectsBoxHeight,
-                        borderRadius: projectsRadius,
-                        overflow: "hidden",
-                        position: "relative",
-                        cursor: projectsCursorOn ? "none" : "auto"
-                    }}
+                    className={`projects-iridescence-box ${projectsCursorOn ? "cursor-active" : ""}`}
                     onMouseEnter={() => setProjectsCursorOn(true)}
                     onMouseLeave={() => setProjectsCursorOn(false)}
                 >
                     <Iridescence
                         className="projects-iridescence-bg"
-                        color={[0.12, 0.05, 0.18]}
+                        color={iridescenceColor}
                         mouseReact={false}
                         amplitude={0.1}
                         speed={1.0}
@@ -334,23 +319,12 @@ function App() {
                         style={{
                             position: "relative",
                             zIndex: 3,
-                            height: "100%",
-                            paddingTop: "1rem",
-                            paddingBottom: "2rem"
+                            height: "100%"
                         }}
                     >
                         <div
                             className="texttype-section"
-                            style={{
-                                marginTop: "0",
-                                marginBottom: "1.5rem",
-                                marginLeft: "4rem",
-                                width: "1100px",
-                                display: "flex",
-                                justifyContent: "flex-start"
-                            }}
                         >
-
                             <TextType
                                 text={[
                                     "Projects I've worked on",
@@ -365,7 +339,7 @@ function App() {
                         </div>
                         <div className="spacebit"></div>
 
-                        <div style={{ height: "840px", position: "relative", padding: "0 2rem 2rem 2rem" }}>
+                        <div className="projects-grid-wrap">
                             <ChromaGrid items={items} radius={300} damping={0.45} fadeOut={0.6} ease="power3.out" />
                         </div>
                     </div>

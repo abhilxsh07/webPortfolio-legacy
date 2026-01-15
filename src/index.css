@@ -3,6 +3,7 @@ body {
     margin: 0;
     height: 100%;
     background: #0b0b0b;
+    overflow-x: hidden;
 }
 
 /* ---------- Config ---------- */
@@ -24,6 +25,10 @@ body {
     /* Content offsets (kept in case you reuse nav later) */
     --content-top: 200px;
     --content-left: 250px;
+
+    --page-side-padding: clamp(1rem, 4vw, 3rem);
+    --section-gap: clamp(3rem, 8vw, 7rem);
+    --card-radius: 2rem;
 }
 
 /* Full-page host */
@@ -93,8 +98,9 @@ body.parallax-squares {
 .page-content {
     position: relative;
     z-index: 1;
-    min-height: 200vh;   /* 2× viewport height */
-    padding-bottom: 4rem;
+    min-height: 100svh;
+    padding: 0 var(--page-side-padding) 4rem;
+    overflow-x: clip;
 }
 
 /* Old paragraph styles (kept) */
@@ -109,11 +115,11 @@ p.introLine {
 
 /* Old nav offsets (harmless if you no longer use a nav inside page-content) */
 .page-content > nav + * {
-    margin-top: var(--content-top);
+    margin-top: clamp(6rem, 12vw, 10rem);
 }
 
 .page-content > nav ~ * {
-    margin-left: var(--content-left);
+    margin-left: 0;
 }
 
 /* ========= Rotating button ========= */
@@ -124,7 +130,7 @@ p.introLine {
     justify-content: center;
     border-radius: 999px;
     padding: 0.6rem 1.8rem;   /* larger button */
-    font-size: 1.1rem;
+    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
 }
 
 /* RGBA background for the primary button */
@@ -150,7 +156,7 @@ p.introLine {
 .rotating-text-inner {
     color: #ffffff;
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -162,7 +168,7 @@ p.introLine {
 .hero-center {
     display: flex;
     justify-content: center;
-    margin-top: 8rem;         /* distance below navbar; tweak as needed */
+    margin-top: clamp(5rem, 12vw, 8rem);
 }
 
 /* Inner wrapper so BlurText and hero card share the same left edge */
@@ -170,22 +176,22 @@ p.introLine {
     display: flex;
     flex-direction: column;
     align-items: flex-start;  /* BlurText and card align by left edge */
-    font-size: 32px;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    width: min(1200px, 100%);
 }
 
 /* Bigger card: wider, taller, more padding */
 .hero-card {
     position: relative;
     overflow: hidden;
-    padding: 3rem 4rem;
-    border-radius: 2rem;
+    padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 6vw, 4rem);
+    border-radius: var(--card-radius);
     background: rgba(10, 10, 10, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.16);
     box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
     color: #ffffff;
-    min-width: 1200px;
-    max-width: 1000px;
-    min-height: 500px;
+    width: min(1100px, 100%);
+    min-height: clamp(420px, 60vw, 540px);
 }
 
 /* New: hero content layout (left text + right profile card) */
@@ -205,12 +211,13 @@ p.introLine {
     align-items: center;
     justify-content: flex-start;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
 /* "I am a" text */
 .hero-prefix {
     color: #ffffff;
-    font-size: 1.4rem;
+    font-size: clamp(1.1rem, 2.4vw, 1.4rem);
     font-weight: 600;
 }
 
@@ -237,24 +244,34 @@ p.introLine {
 .flowing-menu-container {
     display: flex;
     justify-content: center;
-    margin-top: 0; /* space below the hero section */
+    margin-top: 0;
+}
+
+.flowing-menu-frame {
+    min-height: clamp(360px, 60vw, 600px);
+    position: relative;
+    width: min(900px, 100%);
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0 clamp(0.75rem, 3vw, 1.5rem);
+    overflow: hidden;
 }
 /* Magic Bento section below the FlowingMenu */
 .magic-bento-container {
     display: flex;
-    justify-content: left;  /* center the grid */
-    margin-top: 7rem;         /* space under the FlowingMenu */
+    justify-content: center;
+    margin-top: var(--section-gap);
     margin-bottom: 1rem;
 
 }
 
 .scrambled-text-wrapper {
-    margin-top: 6rem;          /* space from the hero container above */
+    margin-top: var(--section-gap);
     margin-bottom: 0;       /* space before the flowing menu */
     display: flex;
     justify-content: left;
-    padding: 0 2rem;
-    margin-left: 3rem;
+    padding: 0 var(--page-side-padding);
+    margin-left: 0;
 }
 
 .scrambled-text-demo {
@@ -262,31 +279,33 @@ p.introLine {
     color: #ffffff;
     line-height: 1.6;
     text-align: left;
-    font-size: 32px;
+    font-size: clamp(1.4rem, 3vw, 2rem);
 }
 
 .flowing-menu-container {
     display: flex;
     justify-content: center;
-    margin-top: 4rem;
-    margin-bottom: 3rem; /* space below flowing menu, above CardSwap */
+    margin-top: clamp(2rem, 6vw, 4rem);
+    margin-bottom: clamp(2rem, 6vw, 3rem);
 }
 .colorbends-section {
     display: flex;
     justify-content: center;
-    margin-top: 4rem;
-    margin-bottom: 10rem;
+    margin-top: clamp(2rem, 6vw, 4rem);
+    margin-bottom: var(--section-gap);
 }
 
 .colorbends-box {
     position: relative;
     overflow: hidden;
-    border-radius: 2rem;
+    border-radius: var(--card-radius);
     background: rgba(10, 10, 10, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.16);
     box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
-    width: 100%;
-    height: 700px;
+    width: min(1200px, 100%);
+    min-height: clamp(520px, 80vw, 750px);
+    padding: clamp(1rem, 4vw, 2.5rem);
+    box-sizing: border-box;
 }
 
 .colorbends-bg {
@@ -300,19 +319,12 @@ p.introLine {
 
 
 .texttype-section {
-    --texttype-mt: 300px;
-    --texttype-mb: 100px;
-    --texttype-ml: 200px;
-    --texttype-width: 1100px;
-
-    margin-top: var(--texttype-mt);
-    margin-bottom: var(--texttype-mb);
-    margin-left: var(--texttype-ml);
-
-    width: var(--texttype-width);
-
+    margin: 0 auto clamp(1rem, 4vw, 1.5rem);
+    width: min(1100px, 100%);
     display: flex;
     justify-content: flex-start;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
+    box-sizing: border-box;
 }
 
 .texttype-section > * {
@@ -323,14 +335,23 @@ p.introLine {
     font-weight: 300;
     line-height: 1.15;
     letter-spacing: 0.5px;
+    word-break: break-word;
+}
+
+.texttype-section .text-type {
+    min-height: 1.2em;
+}
+
+.texttype-section .text-type {
+    min-height: 1.2em;
 }
 
 .space {
-    margin-top: 200px;
+    margin-top: clamp(5rem, 18vw, 12.5rem);
 }
 
 .spacemore {
-    margin-top: 400px;
+    margin-top: clamp(7rem, 24vw, 18rem);
 }
 
 .projects-blur-box {
@@ -351,52 +372,28 @@ p.introLine {
 }
 
 .projects-grid-wrap {
-    height: 600px;
     position: relative;
     width: 100%;
+    padding: 0 clamp(1rem, 4vw, 2.5rem) clamp(2rem, 6vw, 3rem);
 }
 
-.projects-iridescence-section {
-    margin: 6rem auto 0;
-    border-radius: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+.projects-iridescence-box {
+    position: relative;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    width: min(1200px, 100%);
+    margin: 0 auto;
+    background: rgba(6, 6, 12, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
-    overflow: hidden;
+    contain: paint;
+    isolation: isolate;
+    transform: translateZ(0);
+    will-change: transform;
 }
 
-.projects-grid-wrap {
-    height: 600px;
-    position: relative;
-    width: 100%;
-}
-.projects-iridescence-box {
-    position: relative;
-    overflow: hidden;
-}
-
-.projects-content {
-    position: relative;
-    z-index: 5;
-}
-.projects-iridescence{
-    --iridescence-start-gap: 140px;  /* change this */
-    margin-top: var(--iridescence-start-gap);
-}
-.projects-iridescence .texttype-section{
-    margin-top: 300px;              /* brings TextType up */
-    margin-bottom: 100px;        /* spacing between TextType and grid */
-}
-
-.projects-iridescence .iridescence-content{
-    --inner-top-pad: 24px;      /* change this to move TextType closer/farther from top */
-    --inner-bottom-pad: 60px;
-    padding: var(--inner-top-pad) 0 var(--inner-bottom-pad);
-    box-sizing: border-box;
-}
-.projects-iridescence-box {
-    position: relative;
-    border-radius: 2rem;
-    overflow: hidden;
+.projects-iridescence-box.cursor-active {
+    cursor: none;
 }
 
 .projects-iridescence-bg {
@@ -408,8 +405,71 @@ p.introLine {
 .projects-iridescence-content {
     position: relative;
     z-index: 3;
+    padding: clamp(2rem, 6vw, 3.5rem) 0 0;
 }
 
 .spacebit {
-    margin-top: 100px;
+    margin-top: clamp(2rem, 8vw, 6rem);
+}
+
+.projects-section {
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 960px) {
+    .hero-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero-card {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 720px) {
+    .glass-nav-wrapper {
+        top: 1rem;
+        width: calc(100% - 2rem);
+    }
+
+    .glass-nav {
+        width: 100%;
+        justify-content: center;
+        padding: 0.75rem 1rem;
+    }
+
+    .glass-nav-list {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .flowing-menu-frame {
+        min-height: clamp(320px, 70vw, 520px);
+    }
+}
+
+@media (max-width: 540px) {
+    .hero-inner {
+        align-items: stretch;
+    }
+
+    .hero-card {
+        padding: 1.5rem;
+    }
+
+    .projects-iridescence-content {
+        padding-top: 1rem;
+    }
+}
+.aurora-bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
+
+.aurora-bleed .aurora-container {
+    width: 100%;
 }

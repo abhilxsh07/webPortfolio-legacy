@@ -139,6 +139,26 @@ const TargetCursor = ({
             moveCursor(e.clientX - r.left, e.clientY - r.top);
         };
 
+        const updateActiveTargetCorners = () => {
+            if (!activeTarget || !cursorRef.current) return;
+
+            const scopeRect = scope.getBoundingClientRect();
+            const rect = activeTarget.getBoundingClientRect();
+            const { borderWidth, cornerSize } = constants;
+
+            const left = rect.left - scopeRect.left;
+            const top = rect.top - scopeRect.top;
+            const right = rect.right - scopeRect.left;
+            const bottom = rect.bottom - scopeRect.top;
+
+            targetCornerPositionsRef.current = [
+                { x: left - borderWidth, y: top - borderWidth },
+                { x: right + borderWidth - cornerSize, y: top - borderWidth },
+                { x: right + borderWidth - cornerSize, y: bottom + borderWidth - cornerSize },
+                { x: left - borderWidth, y: bottom + borderWidth - cornerSize }
+            ];
+        };
+
         const scrollHandler = () => {
             if (!activeTarget || !cursorRef.current) return;
 
@@ -153,7 +173,10 @@ const TargetCursor = ({
 
             if (!isStillOverTarget) {
                 if (currentLeaveHandler) currentLeaveHandler();
+                return;
             }
+
+            updateActiveTargetCorners();
         };
 
         const mouseDownHandler = () => {
@@ -300,6 +323,7 @@ const TargetCursor = ({
         scope.addEventListener('mousemove', moveHandler);
         scope.addEventListener('mouseover', enterHandler);
         window.addEventListener('scroll', scrollHandler, { passive: true });
+        window.addEventListener('resize', updateActiveTargetCorners, { passive: true });
         scope.addEventListener('mousedown', mouseDownHandler);
         scope.addEventListener('mouseup', mouseUpHandler);
 
@@ -311,6 +335,7 @@ const TargetCursor = ({
             scope.removeEventListener('mousemove', moveHandler);
             scope.removeEventListener('mouseover', enterHandler);
             window.removeEventListener('scroll', scrollHandler);
+            window.removeEventListener('resize', updateActiveTargetCorners);
             scope.removeEventListener('mousedown', mouseDownHandler);
             scope.removeEventListener('mouseup', mouseUpHandler);
 

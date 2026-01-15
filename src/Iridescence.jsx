@@ -56,6 +56,7 @@ export default function Iridescence({
                                     }) {
     const ctnDom = useRef(null);
     const mousePos = useRef({ x: 0.5, y: 0.5 });
+    const resizeRaf = useRef(0);
 
     useEffect(() => {
         if (!ctnDom.current) return;
@@ -72,7 +73,7 @@ export default function Iridescence({
         });
 
         const gl = renderer.gl;
-        gl.clearColor(0, 0, 0, 0);
+        gl.clearColor(0.03, 0.03, 0.06, 1);
 
         let program;
 
@@ -82,10 +83,11 @@ export default function Iridescence({
         canvas.style.width = '100%';
         canvas.style.height = '100%';
         canvas.style.display = 'block';
+        canvas.style.backgroundColor = 'transparent';
 
-        function resize() {
-            const scale = 1;
-            renderer.setSize(ctn.offsetWidth * scale, ctn.offsetHeight * scale);
+        const resize = (width, height) => {
+            if (!width || !height) return;
+            renderer.setSize(width, height);
 
             if (program) {
                 program.uniforms.uResolution.value = new Color(
@@ -94,10 +96,16 @@ export default function Iridescence({
                     gl.canvas.width / gl.canvas.height
                 );
             }
-        }
+        };
 
-        window.addEventListener('resize', resize, false);
-        resize();
+        const resizeObserver = new ResizeObserver(entries => {
+            const { width, height } = entries[0].contentRect;
+            if (resizeRaf.current) cancelAnimationFrame(resizeRaf.current);
+            resizeRaf.current = requestAnimationFrame(() => resize(width, height));
+        });
+
+        resizeObserver.observe(ctn);
+        resize(ctn.offsetWidth, ctn.offsetHeight);
 
         const geometry = new Triangle(gl);
 
@@ -142,7 +150,8 @@ export default function Iridescence({
 
         return () => {
             cancelAnimationFrame(animateId);
-            window.removeEventListener('resize', resize);
+            resizeObserver.disconnect();
+            if (resizeRaf.current) cancelAnimationFrame(resizeRaf.current);
 
             if (mouseReact) {
                 ctn.removeEventListener('mousemove', handleMouseMove);
