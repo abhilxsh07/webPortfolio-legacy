@@ -308,7 +308,7 @@ function App() {
                     {projectsCursorOn && (
                         <TargetCursor
                             spinDuration={2}
-                                hideDefaultCursor={false}
+                            hideDefaultCursor={false}
                             parallaxOn={true}
                             targetSelector=".cursor-target"
                         />
