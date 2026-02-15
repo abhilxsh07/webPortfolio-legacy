@@ -5,7 +5,7 @@ export default defineConfig({
     plugins: [react()],
 
 
-    base: "/webPortfolio-legacy-/",
+    base: "/webPortfolio-legacy/",
 
     build: {
         outDir: "docs",
