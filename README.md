@@ -1,6 +1,6 @@
 # webPortfolio-legacy
 
-My first portfolio site, built between November 2025 and February 2026 while I was learning React. It has been replaced by [abhilashkar.dev](https://abhilashkar.dev/) ([source](https://github.com/abhilxsh07/portfolio_v2)), and this repo is archived.
+My first portfolio site, built between November 2025 and February 2026 while I was learning React. It has been replaced by [abhilashkar.dev](https://abhilashkar.dev/), and this repo is archived.
 
 **Live:** [abhilxsh07.github.io/webPortfolio-legacy](https://abhilxsh07.github.io/webPortfolio-legacy/)
 
